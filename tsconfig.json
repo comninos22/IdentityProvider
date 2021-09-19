@@ -1,0 +1,19 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "noImplicitAny": true,
+        "removeComments": true,
+        "preserveConstEnums": true,
+        "resolveJsonModule":true,
+        "outDir": "./build",
+        "esModuleInterop":true
+    },
+    "include": [
+        "source/**/*",
+        "typings/index.d.ts"
+    ],
+    "exclude": [
+        "node_modules",
+        "**/*.spec.ts"
+    ]
+}
