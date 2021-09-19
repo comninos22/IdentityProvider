@@ -6,7 +6,8 @@
         "preserveConstEnums": true,
         "resolveJsonModule":true,
         "outDir": "./build",
-        "esModuleInterop":true
+        "esModuleInterop":true,
+       
     },
     "include": [
         "source/**/*",

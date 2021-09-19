@@ -12,6 +12,6 @@ export const validate = (req: any, res: any, next: any) => {
         return next()
     }
     return res.status(422).json({
-        error: "validation error",
+        error: "validation error",errors
     })
 }

@@ -1,6 +1,6 @@
 
 import { Request, Response } from "express";
-import { selectUsers, loginUser, registerUser } from "../services/user.repo"; "../services/user.repo"
+import { setBanned } from "../services/user.repo";
 import * as jwt from "jsonwebtoken"
 import * as bcrypt from "bcrypt"
 import { JWT_SECRET, BCRYPT_SALT } from "../../keys.json";
@@ -9,22 +9,36 @@ import { sha256 } from "crypto-hash"
 
 
 export const unBanUser = async (req: Request, res: Response) => {
-    let user = <User>req.body
-    console.log(user);
-
-    user.password = await sha256(user.password)
-    if (user = await loginUser(user)) {
+    try {
+        if (req.body.id == req.payload.id) {
+            throw "paradox"
+        }
+        let user: User
+        if (user = await setBanned(req.body.id, false)) {
+            return res.json({ message: `User ${user.username} unbanned succesfuly` })
+        }
     }
-    return res.status(401).json({ error: "you are not who you say you are" })
+    catch (error) {
+        return res.status(470).json({ error })
+    }
 }
 
 export const banUser = async (req: Request, res: Response) => {
-    const user = <User>req.body;
-    user.password = await sha256(user.password,)
     try {
-    } catch (e) {
-        return res.status(450).json({ error: "email already exists", e })
+        if (req.body.id == req.payload.id) {
+            throw "cant ban yourself stupid"
+        }
+        let user: User
+        console.log(req.body);
+
+        if (user = await setBanned(req.body.id, true)) {
+            return res.json({ message: `User ${user.username} banned succesfuly` })
+        }
     }
+    catch (error) {
+        return res.status(470).json({ error })
+    }
+
 }
 
 
