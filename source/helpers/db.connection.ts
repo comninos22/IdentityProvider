@@ -6,7 +6,6 @@ export const connectDB = () => {
         try {
             pool = new Pool(keys.PG_USERDB)
             pool.connect()
-            console.log("kakakak");
             pool.on("connect", () => {
                 console.log("DB connected")
             })

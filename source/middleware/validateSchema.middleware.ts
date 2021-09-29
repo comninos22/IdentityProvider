@@ -1,17 +1,9 @@
-import { check, Schema, ValidationChain, validationResult } from 'express-validator'
-import Joi from "joi"
-import { NextFunction, Response } from "express"
-// validation/validateMiddleware
+import { validationResult } from 'express-validator'
 
-
-
-// DRY our code with higher order function
-export const validate = (req: any, res: any, next: any) => {
+export const validate = (req: Request, res: any, next: any) => {
     const errors = validationResult(req)
-    if (errors.isEmpty()) {
-        return next()
-    }
-    return res.status(422).json({
-        error: "validation error",errors
+    return errors.isEmpty() ? next() : res.status(422).json({
+        error: "validation error",
+        errors: errors.array({ onlyFirstError: false })
     })
 }

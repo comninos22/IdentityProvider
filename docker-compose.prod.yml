@@ -1,0 +1,6 @@
+services:
+  ts-node-docker:
+    build:
+      target: production
+   
+    command: node build/source/index.js

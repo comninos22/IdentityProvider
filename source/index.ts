@@ -1,21 +1,31 @@
 import express, { NextFunction, Request, Response } from "express";
 import cors from "cors";
-import { authorizationRouter } from "./routes/authentication.route"
-import { clearance, verify } from "./middleware/validateToken.middleware";
 import { connectDB } from "./helpers/db.connection";
-import { adminRouter } from "./routes/admin.route";
+import { check } from "express-validator";
+import { routes } from "./routes/routes";
 const app = express()
-app.use(express.urlencoded())
-app.use(express.json());
-app.use(cors())
 
-app.use("/secret", verify(clearance.ADMIN), (req: Request, res: Response) => {
-    res.json(req.payload)
 
+
+
+app.use(
+    express.urlencoded(),
+    express.json(),
+    cors(),
+    [check("*").escape().trim()]
+)
+app.use(routes)
+app.use(function (err:any, req:any, res:any, next:any) {
+    console.error(err.stack)
+    //res.status(500).send('Something broke!')
 })
-app.use("/", authorizationRouter);
-app.use("/",adminRouter)
-app.listen(4000, () => {
-    console.log("listening.... " + 4000);
-    connectDB()
-})
+app.listen(process.env.PORT || 4000, () => {
+    console.log("aaaeeeaa.... " + 4000);
+    try {
+        connectDB()
+
+    } catch (e) {
+        console.log(e);
+
+    }
+});

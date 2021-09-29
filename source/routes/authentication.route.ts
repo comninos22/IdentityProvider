@@ -11,6 +11,8 @@ router.post(("/login"), [
 router.post(("/register"), [
     Fields.email,
     Fields.password,
-    Fields.username
+    Fields.username,
+    Fields.fullName,
+    Fields.phone,
 ], validate, register)
 export const authorizationRouter = router;
